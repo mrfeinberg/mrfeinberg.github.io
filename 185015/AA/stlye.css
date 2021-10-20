@@ -1,0 +1,51 @@
+body
+
+{
+
+  background-color:rgb(250,230,215);
+  
+}
+
+
+
+h1
+
+{
+	font-family:Montserrat;
+    color:black;
+  
+
+}
+
+
+ul
+
+{
+
+display:table;
+margin: 0 auto;
+
+ font-size:20px;
+
+ 
+
+}
+
+ol
+
+{
+
+font-size:20px;
+
+
+}
+
+p
+
+{
+
+  font-family:Antipasta Pro;
+
+  font-size:20px;
+
+}
