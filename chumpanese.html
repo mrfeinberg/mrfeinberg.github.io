@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Chumpanese</title>
+</head>
+<body>
+Accumulator: <input id="accum" type="text" value="0"/><button onclick="step()">Step</button>
+<table border="0">
+  <tr><th>Program Instructions</th><th>Random Access Memory</th></tr>
+  <tr>
+    <td>
+      <table id="programtable" border="1">
+        <tr><th>Line #</th><th>Label</th><th>Operation</th><th>Argument</th><th>Comment</th></tr>
+      </table>
+    </td>
+    <td>
+      <table id="memorytable" border="1">
+        <tr><th>Address</th><th>Label</th><th>Value</th></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<script>
+function step()
+{
+  setLineColor("transparent");
+  var op = document.getElementById("op" + pc).value;
+  var arg = document.getElementById("arg" + pc).value;
+  if (arg == "it" || arg == "")
+    arg = parseInt(document.getElementById("value" + addr).value);
+  else if (isNaN(arg))
+  {
+    if (op == "load" || op == "add" || op == "subtract" || op == "read" || op == "storeto")
+    {
+      for (var i = 0; i < numInstructions; i++)
+      {
+        if (document.getElementById("memlabel" + i).value == arg)
+        {
+          arg = i;
+          break;
+        }
+      }
+    }
+    else
+    {
+      for (var i = 0; i < numInstructions; i++)
+      {
+        if (document.getElementById("proglabel" + i).value == arg)
+        {
+          arg = i;
+          break;
+        }
+      }
+    }
+  }
+  else
+    arg = parseInt(arg);
+  if (op == "load")
+  {
+    accum.value = arg;
+    pc++;
+    clearAddr();
+  }
+  else if (op == "add")
+  {
+    accum.value = parseInt(accum.value) + arg;
+    pc++;
+    clearAddr();
+  }
+  else if (op == "subtract")
+  {
+    accum.value = parseInt(accum.value) - arg;
+    pc++;
+    clearAddr();
+  }
+  else if (op == "read")
+  {
+    setAddr(arg);
+    pc++;
+  }
+  else if (op == "storeto")
+  {
+    document.getElementById("value" + arg).value = accum.value;
+    pc++;
+    clearAddr();
+  }
+  else if (op == "goto")
+  {
+    pc = arg;
+    clearAddr();
+  }
+  else if (op == "ifzero")
+  {
+    if (parseInt(accum.value) == 0)
+      pc = arg;
+    else
+      pc++;
+    clearAddr();
+  }
+  else if (op == "ifpos")
+  {
+    if (parseInt(accum.value) > 0)
+      pc = arg;
+    else
+      pc++;
+    clearAddr();
+  }
+  else if (op == "ifneg")
+  {
+    if (parseInt(accum.value) < 0)
+      pc = arg;
+    else
+      pc++;
+    clearAddr();
+  }
+
+  setLineColor("#ffff00");
+}
+function setLineColor(color)
+{
+  try
+  {
+    document.getElementById("progrow" + pc).style = "background-color:" + color + ";";
+  }
+  catch (err)
+  {
+  }
+}
+function gotoLine(line)
+{
+  setLineColor("transparent");
+  pc = line;
+  setLineColor("#ffff00");
+}
+function clearAddr()
+{
+  try
+  {
+    document.getElementById("memrow" + addr).style = "background-color:transparent;";
+  }
+  catch (err)
+  {
+  }
+  addr = -1;
+}
+function setAddr(x)
+{
+  clearAddr();
+  addr = x;
+  try
+  {
+    document.getElementById("memrow" + addr).style = "background-color:#77ff77;";
+  }
+  catch (err)
+  {
+  }
+}
+var programTable = document.getElementById("programtable");
+var memoryTable = document.getElementById("memorytable");
+var numInstructions = 32;
+for (var i = 0; i < numInstructions; i++)
+{
+  var s = "";
+  s += "<tr id='progrow" + i + "'><td><button onclick='gotoLine(" + i + ")'>" + i + "</button></td>";
+  s += "<td><input id='proglabel" + i + "' type='text' size='10'/></td>";
+  s += "<td><select id='op" + i + "'>";
+  s += "<option value='load'>load</option>";
+  s += "<option value='add'>add</option>";
+  s += "<option value='subtract'>subtract</option>";
+  s += "<option value='read'>read</option>";
+  s += "<option value='storeto'>storeto</option>";
+  s += "<option value='goto'>goto</option>";
+  s += "<option value='ifzero'>ifzero</option>";
+  s += "<option value='ifpos'>ifpos</option>";
+  s += "<option value='ifneg'>ifneg</option>";
+  s += "<option value='nop' selected='selected'></option>";
+  s += "</select></td>";
+  s += "<td><input id='arg" + i + "' type='text' size='10'/></td>";
+  s += "<td><input type='text'/></td></tr>\n";
+
+  programTable.innerHTML += s;
+  s = "<tr id='memrow" + i + "'><td>" + i + "</td>";
+  s += "<td><input id='memlabel" + i + "' type='text' size='10'/></td>";
+  s += "<td><input id='value" + i + "' type='text' size='10'/></td></tr>";
+  memoryTable.innerHTML += s;
+}
+var pc = 0;
+var accum = document.getElementById("accum");
+var addr = 0;
+setLineColor("#ffff00");
+</script>
+</body>
+</html>
