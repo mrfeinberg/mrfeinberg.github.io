@@ -10,7 +10,7 @@ Accumulator: <input id="accum" type="text" value="0"/><button onclick="step()">S
   <tr>
     <td>
       <table id="programtable" border="1">
-        <tr><th>Line #</th><th>Label</th><th>Operation</th><th>Argument</th><th>Comment</th></tr>
+        <tr><th>Line #</th><th>Label</th><th>Operation</th><th>Argument</th><th>Comment</th><th>Edit</th></tr>
       </table>
     </td>
     <td>
@@ -163,6 +163,36 @@ function stepTimes(n)
 		n--;
 	}
 }
+function insert(line)
+{
+	for (var to = numInstructions - 1; to > line; to--)
+	{
+		var from = to - 1;
+		document.getElementById("proglabel" + to).value = document.getElementById("proglabel" + from).value;
+		document.getElementById("op" + to).value = document.getElementById("op" + from).value;
+		document.getElementById("arg" + to).value = document.getElementById("arg" + from).value;
+		document.getElementById("comment" + to).value = document.getElementById("comment" + from).value;
+	}
+	document.getElementById("proglabel" + line).value = "";
+	document.getElementById("op" + line).value = "";
+	document.getElementById("arg" + line).value = "";
+	document.getElementById("comment" + line).value = "";
+}
+function remove(line)
+{
+	for (var to = line; to < numInstructions - 1; to++)
+	{
+		var from = to + 1;
+		document.getElementById("proglabel" + to).value = document.getElementById("proglabel" + from).value;
+		document.getElementById("op" + to).value = document.getElementById("op" + from).value;
+		document.getElementById("arg" + to).value = document.getElementById("arg" + from).value;
+		document.getElementById("comment" + to).value = document.getElementById("comment" + from).value;
+	}
+	document.getElementById("proglabel" + (numInstructions - 1)).value = "";
+	document.getElementById("op" + (numInstructions - 1)).value = "";
+	document.getElementById("arg" + (numInstructions - 1)).value = "";
+	document.getElementById("comment" + (numInstructions - 1)).value = "";
+}
 var programTable = document.getElementById("programtable");
 var memoryTable = document.getElementById("memorytable");
 var numInstructions = 32;
@@ -184,7 +214,8 @@ for (var i = 0; i < numInstructions; i++)
   s += "<option value='nop' selected='selected'></option>";
   s += "</select></td>";
   s += "<td><input id='arg" + i + "' type='text' size='10'/></td>";
-  s += "<td><input type='text'/></td></tr>\n";
+  s += "<td><input id='comment" + i + "' type='text'/></td>";
+  s += "<td><button onclick='insert(" + i + ")'>+</button><button onclick='remove(" + i + ")'>-</button></td></tr>\n";
 
   programTable.innerHTML += s;
   s = "<tr id='memrow" + i + "'><td>" + i + "</td>";
