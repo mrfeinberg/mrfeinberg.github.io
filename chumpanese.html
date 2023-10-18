@@ -4,7 +4,7 @@
 <title>Chumpanese</title>
 </head>
 <body>
-Accumulator: <input id="accum" type="text" value="0"/><button onclick="step()">Step</button>
+Accumulator: <input id="accum" type="text" value="0"/><button onclick="step()">Step</button><button onclick="stepTimes(100)">Step 100 Times</button>
 <table border="0">
   <tr><th>Program Instructions</th><th>Random Access Memory</th></tr>
   <tr>
@@ -154,6 +154,14 @@ function setAddr(x)
   catch (err)
   {
   }
+}
+function stepTimes(n)
+{
+	while (n > 0)
+	{
+		step();
+		n--;
+	}
 }
 var programTable = document.getElementById("programtable");
 var memoryTable = document.getElementById("memorytable");
