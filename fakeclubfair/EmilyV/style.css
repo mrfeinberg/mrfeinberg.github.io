@@ -1,0 +1,39 @@
+body
+{
+	font-family: didot
+}
+
+h1
+{
+	color:lightpink;
+}
+
+h2
+{
+	color:lightblue;
+}
+
+h3
+{
+	color:purple;
+}
+
+a:link
+
+{
+
+  color:pink;
+
+  text-decoration:none;
+
+}
+
+a:visited
+
+{
+
+  color:pink;
+
+  text-decoration:none;
+
+}

@@ -1,0 +1,19 @@
+body
+{
+	color:white;text-align:center;background-image:url('spiderbackground.png');a:link
+}
+a:link
+{
+  color:RosyBrown;
+  text-decoration:none;
+}
+a:visited
+{
+  color:RosyBrown;
+  text-decoration:none;
+}
+a:hover
+{
+  color:white;
+  text-decoration:underline;
+}
