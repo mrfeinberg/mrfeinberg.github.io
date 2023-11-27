@@ -1,0 +1,26 @@
+a:link
+{
+  color:grey;
+  text-decoration:none;
+}
+a:visited
+{
+  color:grey;
+  text-decoration:none;
+}
+a:hover
+{
+  background-color:none;
+  text-decoration:underline;
+}
+body
+{
+background-image:url('farmlandbg.jpg');
+color:white;
+font-family:Georgia;
+  font-size:20px;
+}
+h1
+{
+  color:black;
+}
